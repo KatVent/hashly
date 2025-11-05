@@ -9,7 +9,7 @@ A simple Python CLI tool to hash text or files using different algorithms. Built
 ## 🛠️ Installation
 
 ### Option 1: Run inside a virtual environment
-'''bash
+```bash
 git clone
 https://github.com/KatVent/hashly.git
 cd Hashly
@@ -18,27 +18,27 @@ source .venv/bin/activate
 pip install build
 python -m build
 pip install dist/hashly-1.0-py3-none-any.whl
-'''
+```
 
 
 ### Option 2: Install globally
-'''bash
+```bash
 pip install pipx # if not installed
 pipx install
 git+https://github.com/KatVent/hashly.git
-'''
+```
 
 
 ## 💡 Usage
 
 ### Hash text
 
-''' bash 
+```bash 
 hashly text "hello" --md5
-'''
+```
 
 ### Hash file
 
-''' bash 
+```bash 
 hashly file ./example.txt --sha1
-'''
+```
