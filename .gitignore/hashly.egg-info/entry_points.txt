@@ -1,0 +1,2 @@
+[console_scripts]
+hashly = hashly.main:app
