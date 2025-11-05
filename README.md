@@ -18,7 +18,7 @@ source .venv/bin/activate
 pip install build
 python -m build
 pip install dist/hashly-1.0-py3-none-any.whl
-
+'''
 
 
 ### Option 2: Install globally
@@ -26,6 +26,7 @@ pip install dist/hashly-1.0-py3-none-any.whl
 pip install pipx # if not installed
 pipx install
 git+https://github.com/KatVent/hashly.git
+'''
 
 
 ## 💡 Usage
@@ -34,8 +35,10 @@ git+https://github.com/KatVent/hashly.git
 
 ''' bash 
 hashly text "hello" --md5
+'''
 
 ### Hash file
 
 ''' bash 
 hashly file ./example.txt --sha1
+'''
