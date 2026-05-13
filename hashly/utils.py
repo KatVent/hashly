@@ -1,15 +1,18 @@
 import hashlib
 
-def hash_text(text: str, algorithm: str) :
+def hash_text(string: str, algorithm: str) :
     try:
         hasher = hashlib.new(algorithm)
-        hasher.update(text.encode("utf-8"))
+        hasher.update(string.encode("utf-8"))
         return hasher.hexdigest()
     except ValueError:
         raise ValueError(f"[-] Unsupported hash algorithm: {algorithm}")
 
 
-def hash_file(path: str, algorithm: str = "sha256") -> str:
+def hash_file(path: str, algorithm: str = None) :
+    """Lif algorithm == None :
+        print("[!] No algorithm specified")
+    else:??:::"""
     try:
         hasher = hashlib.new(algorithm)
         with open(path, "rb") as f:
