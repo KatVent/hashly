@@ -9,7 +9,7 @@ def hash_text(string: str, algorithm: str) :
         raise ValueError(f"[-] Unsupported hash algorithm: {algorithm}")
 
 
-def hash_file(path: str, algorithm: str = None) :
+def hash_file(path: str, algorithm: str) :
     """Lif algorithm == None :
         print("[!] No algorithm specified")
     else:??:::"""
