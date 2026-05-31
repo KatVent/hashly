@@ -1,8 +1,7 @@
 import argparse
 import sys
 
-from hashly.utils import hash_text, hash_file
-
+from utils import hash_text, hash_file
 
 def show_help():
     help_text = r"""
@@ -15,36 +14,68 @@ def show_help():
  |                            /____/      |
  +----------------------------------------+  by Katia Ventouri
 
- Usage: hashly <command> [option] <input>
+ Usage: hashly [command] <input> --alg [choice] 
 
  Command:
  string      Choose string to hash
  file        Choose file or path to hash
 
- Option:
- --md5           MD5 Algorithm   
- --sha1          SHA1 Algorithm   
- --sha256        SHA256 Algorithm   
- --sha512        SHA512 Algorithm
+ Choice:
+ md5           MD5 Algorithm   
+ sha1          SHA1 Algorithm   
+ sha256        SHA256 Algorithm   
+ sha512        SHA512 Algorithm
 
  Examples:   
- hashly string "Hello World" --md5
- hashly file file.txt
+ hashly string "Hello World" --alg md5
+ hashly file file.txt --alg sha1
 """
     print(help_text)
 
+
 def check_algorithm(algorithm):
-    if len(algorithm) != 1:
-        print("[!] Please choose one hash algorithm flag.")
+    #choices = ["md5", "sha1", "sha256", "sha512"]
+    choices = ['blake2b', 'blake2s', 'md5', 'sha1', 'sha224', 'sha256', 'sha384', 'sha3_224', 'sha3_256', 'sha3_384', 'sha3_512',
+     'sha512', 'shake_128', 'shake_256']
+    if "--alg" not in sys.argv:
+        raise ValueError("[!] Please use the flag --alg and one algorithm (md5, sha1, sha256, sha512).")
+    #if algorithm[0] not in choices:
+     #   raise ValueError("[!] Please you need to choose one hash algorithm.")
+    if len(algorithm) != 1 or algorithm[0] not in choices:
+        raise ValueError("[!] Please you need to choose one valid hash algorithm.")
+    return algorithm[0]
+
+    '''except IndexError as e:
+        print(e)
         sys.exit(1)
-    else:
-        return algorithm[0]
+    except ValueError as e:
+        print(e)
+        sys.exit(1)
+
+
+        if indx + 5 >= len(sys.argv):
+            print("[!] Please you need to choose one hash algorithm.")
+            sys.exit(1)
+
+    alg = sys.argv[indx + 5]
+
+    if len(algorithm)  == 0:
+        print("[!] Please you need to choose one hash algorithm.")
+        sys.exit(1)
+    elif len(algorithm) > 1:
+        print("[!] Please choose one hash algorithm.")
+        sys.exit(1)'''
 
 
 def string_command (args):
-    hash_alg = check_algorithm(args.alg)
-    result = hash_text(args.text, hash_alg)
-    print(f"{hash_alg}: {result}")
+    try:
+        hash_alg = check_algorithm(args.alg)
+        result = hash_text(args.text, hash_alg)
+        print(f"{hash_alg}: {result}")
+    except ValueError as e:
+        print(e)
+        sys.exit(1)
+
 
 def file_command(args):
     hash_alg = check_algorithm(args.alg)
@@ -52,65 +83,31 @@ def file_command(args):
     print(f"{hash_alg}: {result}")
 
 def main():
-    parser = argparse.ArgumentParser()
 
+    # Show custom help test
+    if len(sys.argv) == 1:
+        return
+
+    if sys.argv[1] in ("-h", "--help"):
+        show_help()
+        return
+
+
+    parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='command', required=True)
 
     file_parser = subparsers.add_parser('file')
     file_parser.add_argument('path', type=str)
-    file_parser.add_argument("--alg", nargs="+", choices=["md5", "sha1", "sha256", "sha512"])
+    file_parser.add_argument("--alg", nargs="+")
     file_parser.set_defaults(func=file_command)
 
     string_parser = subparsers.add_parser('string')
     string_parser.add_argument('text', type=str)
-    string_parser.add_argument("--alg", nargs="+", choices=["md5", "sha1", "sha256", "sha512"])
+    string_parser.add_argument("--alg", nargs="+")
     string_parser.set_defaults(func=string_command)
-
 
     args = parser.parse_args()
     args.func(args)
 
-
-
 if __name__ == "__main__":
     main()
-"""
-app = typer.Typer(help ="Hash text or files using specific algorithms.")
-
-def resolve_algorithm(md5: bool, sha1: bool, sha256: bool, sha512: bool) -> str:
-    flags = [md5, sha1, sha256, sha512]
-    names = ["md5", "sha1", "sha256", "sha512"]
-    selected = [name for flag, name in zip(flags, names) if flag]
-    if len(selected) > 1:
-        raise typer.BadParameter("Please choose only one hash algorithm flag.")
-    return selected[0] if selected else "sha256"  # default
-
-@app.command()
-def text(
-    input: str,
-    md5: bool = typer.Option(False, "--md5", help = "Use MD5"),
-    sha1: bool = typer.Option(False, "--sha1", help = "Use SHA1"),
-    sha256: bool = typer.Option(False, "--sha256", help = "Use SHA256"),
-    sha512: bool = typer.Option(False, "--sha512", help = "Use SHA512")
-):
-    #Hash plain text using a chosen algorithm.
-    algorithm = resolve_algorithm(md5, sha1, sha256, sha512)
-    result = hash_text(input, algorithm)
-    typer.echo(f"{algorithm}: {result}")
-
-@app.command()
-def file(
-    path: str,
-    md5: bool = typer.Option(False, "--md5", help="Use MD5"),
-    sha1: bool = typer.Option(False, "--sha1", help="Use SHA1"),
-    sha256: bool = typer.Option(False, "--sha256", help="Use SHA256"),
-    sha512: bool = typer.Option(False, "--sha512", help="Use SHA512")
-):
-    #Hash a file using a chosen algorithm.
-    algorithm = resolve_algorithm(md5, sha1, sha256, sha512)
-    result = hash_file(path, algorithm)
-    typer.echo(f"{algorithm}: {result}")
-
-if __name__ == "__main__":
-    app()
-"""

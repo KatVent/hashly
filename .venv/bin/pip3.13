@@ -1,4 +1,4 @@
-#!/home/kali/PycharmProjects/Hashly/.venv/bin/python
+#!/home/kali/Code/hashly/.venv/bin/python3.13
 # -*- coding: utf-8 -*-
 import re
 import sys

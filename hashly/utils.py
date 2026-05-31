@@ -1,18 +1,16 @@
 import hashlib
-
+import sys
 def hash_text(string: str, algorithm: str) :
     try:
         hasher = hashlib.new(algorithm)
         hasher.update(string.encode("utf-8"))
         return hasher.hexdigest()
     except ValueError:
-        raise ValueError(f"[-] Unsupported hash algorithm: {algorithm}")
+        print(f"[-] Unsupported hash algorithm: {algorithm}")
+        sys.exit(1)
 
 
 def hash_file(path: str, algorithm: str) :
-    """Lif algorithm == None :
-        print("[!] No algorithm specified")
-    else:??:::"""
     try:
         hasher = hashlib.new(algorithm)
         with open(path, "rb") as f:
@@ -20,8 +18,8 @@ def hash_file(path: str, algorithm: str) :
                 hasher.update(chunk)
         return hasher.hexdigest()
     except FileNotFoundError:
-        raise FileNotFoundError(f"[-] File not found: {path}")
+        print(f"[-] File not found: {path}")
+        sys.exit(1)
     except ValueError:
-        raise ValueError(f"[-] Unsupported hash algorithm: {algorithm}")
-
-
+        print(f"[-] Unsupported hash algorithm: {algorithm}")
+        sys.exit(1)
