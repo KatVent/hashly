@@ -1,13 +1,9 @@
 import hashlib
 import sys
-def hash_text(string: str, algorithm: str) :
-    try:
-        hasher = hashlib.new(algorithm)
-        hasher.update(string.encode("utf-8"))
-        return hasher.hexdigest()
-    except ValueError:
-        print(f"[-] Unsupported hash algorithm: {algorithm}")
-        sys.exit(1)
+def hash_string(string: str, algorithm: str) :
+    hasher = hashlib.new(algorithm)
+    hasher.update(string.encode("utf-8"))
+    return hasher.hexdigest()
 
 
 def hash_file(path: str, algorithm: str) :
@@ -19,7 +15,4 @@ def hash_file(path: str, algorithm: str) :
         return hasher.hexdigest()
     except FileNotFoundError:
         print(f"[-] File not found: {path}")
-        sys.exit(1)
-    except ValueError:
-        print(f"[-] Unsupported hash algorithm: {algorithm}")
         sys.exit(1)

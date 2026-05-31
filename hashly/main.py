@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-from utils import hash_text, hash_file
+from utils import hash_string, hash_file
 
 def show_help():
     help_text = r"""
@@ -21,11 +21,9 @@ def show_help():
  file        Choose file or path to hash
 
  Choice:
- md5           MD5 Algorithm   
- sha1          SHA1 Algorithm   
- sha256        SHA256 Algorithm   
- sha512        SHA512 Algorithm
-
+ blake2b, blake2s, md5, sha1, sha224, sha256, sha384, sha3_224, sha3_256,
+ sha3_384, sha3_512, sha512, shake_128, shake_256
+     
  Examples:   
  hashly string "Hello World" --alg md5
  hashly file file.txt --alg sha1
@@ -34,43 +32,18 @@ def show_help():
 
 
 def check_algorithm(algorithm):
-    #choices = ["md5", "sha1", "sha256", "sha512"]
     choices = ['blake2b', 'blake2s', 'md5', 'sha1', 'sha224', 'sha256', 'sha384', 'sha3_224', 'sha3_256', 'sha3_384', 'sha3_512',
      'sha512', 'shake_128', 'shake_256']
     if "--alg" not in sys.argv:
-        raise ValueError("[!] Please use the flag --alg and one algorithm (md5, sha1, sha256, sha512).")
-    #if algorithm[0] not in choices:
-     #   raise ValueError("[!] Please you need to choose one hash algorithm.")
+        raise ValueError("[!] Please use the flag --alg and one algorithm.\n For the algorithm options, check on --help or -h.")
     if len(algorithm) != 1 or algorithm[0] not in choices:
         raise ValueError("[!] Please you need to choose one valid hash algorithm.")
     return algorithm[0]
 
-    '''except IndexError as e:
-        print(e)
-        sys.exit(1)
-    except ValueError as e:
-        print(e)
-        sys.exit(1)
-
-
-        if indx + 5 >= len(sys.argv):
-            print("[!] Please you need to choose one hash algorithm.")
-            sys.exit(1)
-
-    alg = sys.argv[indx + 5]
-
-    if len(algorithm)  == 0:
-        print("[!] Please you need to choose one hash algorithm.")
-        sys.exit(1)
-    elif len(algorithm) > 1:
-        print("[!] Please choose one hash algorithm.")
-        sys.exit(1)'''
-
-
 def string_command (args):
     try:
         hash_alg = check_algorithm(args.alg)
-        result = hash_text(args.text, hash_alg)
+        result = hash_string(args.text, hash_alg)
         print(f"{hash_alg}: {result}")
     except ValueError as e:
         print(e)
@@ -78,12 +51,15 @@ def string_command (args):
 
 
 def file_command(args):
-    hash_alg = check_algorithm(args.alg)
-    result = hash_file(args.path, hash_alg)
-    print(f"{hash_alg}: {result}")
+    try:
+        hash_alg = check_algorithm(args.alg)
+        result = hash_file(args.path, hash_alg)
+        print(f"{hash_alg}: {result}")
+    except ValueError as e:
+        print(e)
+        sys.exit(1)
 
 def main():
-
     # Show custom help test
     if len(sys.argv) == 1:
         return
@@ -91,7 +67,6 @@ def main():
     if sys.argv[1] in ("-h", "--help"):
         show_help()
         return
-
 
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='command', required=True)
@@ -108,6 +83,7 @@ def main():
 
     args = parser.parse_args()
     args.func(args)
+
 
 if __name__ == "__main__":
     main()
