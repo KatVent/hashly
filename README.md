@@ -3,9 +3,13 @@
 A simple Python CLI tool to hash text or files using different algorithms. Built with Typer.
 
 ## 🚀 Features
-Hash plain text or file using MD5, SHA1, SHA256 or SHA512
+Hash plain text or file using Blake2b, Blake2s, MD5, SHA1, SHA224, SHA256, SHA384, SHA3_224, SHA3_256,
+SHA3_384, SHA3_512, SHA512, SHAKE_128, SHAKE_256
 
 ## 🛠️ Installation
+
+### Requirements
+Python 3.10 +
 
 ### Option 1: Run inside a virtual environment
 
