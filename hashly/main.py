@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-from utils import hash_string, hash_file
+from hashly.utils import hash_string, hash_file
 
 def show_help():
     help_text = r"""

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hashly"
-version = "2.1.1"
+version = "2.1.4"
 requires-python = ">=3.10"
 description = "A simple Hash CLI tool"
 readme = "README.md"
@@ -15,4 +15,4 @@ authors = [
 dependencies = []
 
 [project.scripts]
-hashly = "hashly.main:app"
+hashly = "hashly.main:main"

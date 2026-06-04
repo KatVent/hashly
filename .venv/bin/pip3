@@ -1,4 +1,4 @@
-#!/home/kali/Code/hashly/.venv/bin/python3.13
+#!/home/kali/Code/hashly/.venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
