@@ -8,5 +8,4 @@ hashly.egg-info/PKG-INFO
 hashly.egg-info/SOURCES.txt
 hashly.egg-info/dependency_links.txt
 hashly.egg-info/entry_points.txt
-hashly.egg-info/requires.txt
 hashly.egg-info/top_level.txt
