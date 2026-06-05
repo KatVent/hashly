@@ -40,7 +40,7 @@ pipx install hashly
 ### Hash text
 
 ```bash 
-hashly string hello --alg md5
+hashly string "hello" --alg md5
 ```
 
 ### Hash file
