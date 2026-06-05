@@ -14,5 +14,9 @@ authors = [
 ]
 dependencies = []
 
+[project.urls]
+repository = "https://github.com/KatVent/hashly"
+Issues = "https://github.com/KatVent/hashly/issues"
+
 [project.scripts]
 hashly = "hashly.main:main"
